@@ -1,17 +1,18 @@
-;;; lsp.el --- Configuration for lsp-mode
-;;
-;;; Commentary:
-;;
-;;; Code:
+(require 'eglot)
 
-(require 'lsp)
-(require 'lsp-ui)
+(add-to-list 'eglot-server-programs
+             '((json-mode js-mode js-ts-mode typescript-ts-mode tsx-ts-mode)
+               . ("typescript-language-server" "--stdio")))
 
-(setq lsp-ui-doc-show-with-cursor nil)
-(setq lsp-ui-sideline-enable nil)
+(add-to-list 'eglot-server-programs
+             '((python-mode python-ts-mode)
+               . ("basedpyright")))
 
-(setq lsp-lens-enable nil)
-(setq lsp-headerline-breadcrumb-enable nil)
-(setq lsp-signature-render-documentation nil)
+(add-to-list 'eglot-server-programs
+             '((go-mode go-ts-mode)
+               . ("gopls")))
 
-;;; lsp.el ends here
+(add-hook 'eglot-managed-mode-hook
+          (lambda ()
+            (flymake-mode 1) ;; On-the-fly diagnostics
+            (eldoc-mode 1))) ;; Inline docs

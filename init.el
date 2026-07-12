@@ -47,7 +47,7 @@
 
 (setq local-default-font
       (cond ((eq system-type 'windows-nt) "Consolas-16")
-            ((eq system-type 'gnu/linux) "DejaVu Sans Mono-14")
+            ((eq system-type 'gnu/linux) "JetBrainsMonoNL Nerd Font Mono-17")
             (t nil)))
 
 (when (eq system-type 'darwin)
@@ -80,30 +80,27 @@
   (package-refresh-contents))
 
 (defvar required-packages)
-(setq required-packages
-      '(dash
-        s
-        f
-        ag
-        exec-path-from-shell
-        pkg-info
-        magit
-        projectile
-        markdown-mode
-        counsel
-        web-mode
-        go-mode
-        yasnippet
-        yaml-mode
-        json-mode
-        flycheck
-        lsp-mode
-        lsp-ui
-        lsp-pyright
-        pyvenv
-        solarized-theme))
+(defvar lang-modes)
 
-(dolist (package required-packages)
+(setq required-packages
+      '(
+        exec-path-from-shell
+        projectile
+        magit
+        treemacs
+        vertico
+        consult
+        pyvenv
+        eldoc-box
+        yasnippet
+        catppuccin-theme))
+
+(setq lang-modes
+      '(
+        markdown-mode
+        web-mode))
+
+(dolist (package (required-packages lang-modes)
   (if (not (package-installed-p package))
       (package-install package)))
 
@@ -113,7 +110,6 @@
 (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
   (require 'exec-path-from-shell)
   (exec-path-from-shell-initialize)
-  ;; (load erc)
   )
 
 (require 'yasnippet)
@@ -126,17 +122,13 @@
 
 (require 'org)
 
-(global-flycheck-mode)
-
-(load "custom/ivy")
 (load "custom/indentation")
 (load "custom/theme")
 (load "custom/keymap")
 (load "custom/project")
 (load "custom/recentf")
 (load "custom/tramp")
-(load "custom/perl")
 (load "custom/markdown")
+(load "custom/lsp")
 (load "custom/hook")
-
-;;; init.el ends here
+(load "custom/lang-modes")
