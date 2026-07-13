@@ -55,34 +55,34 @@
     (put 'downcase-region 'disabled nil)
     (put 'upcase-region 'disabled nil)
 
+    (defvar local-default-font nil)
+
+    (setq local-default-font
+        (cond ((eq system-type 'windows-nt) '(:family "Consolas" :height 160))
+                ((eq system-type 'gnu/linux)  '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
+                (t nil)))
+
+    (when (eq system-type 'darwin)
+    (setq mac-command-modifier 'meta)
+    (setq mac-option-modifier 'super)
+    (setq local-default-font '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+    (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+
+    (when window-system
+    (set-frame-size (selected-frame) 110 50))
+
+    (when local-default-font
+    (apply #'set-face-attribute 'default nil local-default-font)
+    (let ((font-str (format "%s-%d"
+                            (plist-get local-default-font :family)
+                            (/ (plist-get local-default-font :height) 10))))
+        (add-to-list 'initial-frame-alist `(font . ,font-str))
+        (add-to-list 'default-frame-alist `(font . ,font-str))))
+
     :hook
     (before-save-hook . delete-trailing-whitespace)
     (emacs-lisp-mode-hook . enable-paredit-mode))
-
-(defvar local-default-font nil)
-
-(setq local-default-font
-      (cond ((eq system-type 'windows-nt) '(:family "Consolas" :height 160))
-            ((eq system-type 'gnu/linux)  '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
-            (t nil)))
-
-(when (eq system-type 'darwin)
-  (setq mac-command-modifier 'meta)
-  (setq mac-option-modifier 'super)
-  (setq local-default-font '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
-  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-  (add-to-list 'default-frame-alist '(ns-appearance . dark)))
-
-(when window-system
-  (set-frame-size (selected-frame) 110 50))
-
-(when local-default-font
-  (apply #'set-face-attribute 'default nil local-default-font)
-  (let ((font-str (format "%s-%d"
-                          (plist-get local-default-font :family)
-                          (/ (plist-get local-default-font :height) 10))))
-    (add-to-list 'initial-frame-alist `(font . ,font-str))
-    (add-to-list 'default-frame-alist `(font . ,font-str))))
 
 
 (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
