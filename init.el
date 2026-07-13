@@ -4,24 +4,6 @@
 ;; Ryan McGuire Emacs cofiguration bundle: http://github.com/EnigmaCurry/emacs
 ;; Chris Wanstrath http://github.com/defunkt/emacs
 
-(if init-file-debug
-    (setq use-package-verbose t
-        use-package-expand-minimally nil
-        use-package-compute-statistics t
-        debug-on-error t)
-(setq use-package-verbose nil
-        use-package-expand-minimally t))
-
-(setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
-
-(setq package-archive-priorities
-      '(("gnu" . 3)
-        ("melpa" . 2)
-        ("org" . 1)))
-
 (use-package emacs
     :init
     (setq custom-file (concat user-emacs-directory "config/custom/custom.el"))
@@ -30,12 +12,23 @@
     (setq read-process-output-max (* 1024 1024))
     (setq inhibit-startup-message t)
     (setq initial-scratch-message nil)
-    (setq make-backup-files nil)
-    (setq scroll-step 1)
-    (setq major-mode 'text-mode)
-    (setq kill-whole-line t)
-    (setq vc-follow-symlinks nil)
-    (setq show-paren-delay 0)
+    (if init-file-debug
+        (setq use-package-verbose t
+            use-package-expand-minimally nil
+            use-package-compute-statistics t
+            debug-on-error t)
+    (setq use-package-verbose nil
+            use-package-expand-minimally t))
+
+    (setq package-archives
+        '(("gnu" . "https://elpa.gnu.org/packages/")
+            ("melpa" . "https://melpa.org/packages/")
+            ("org" . "http://orgmode.org/elpa/")))
+
+    (setq package-archive-priorities
+        '(("gnu" . 3)
+            ("melpa" . 2)
+            ("org" . 1)))
 
     :custom
     (use-short-answers t)
@@ -48,6 +41,12 @@
     (column-number-mode 1)
     (show-paren-mode 1)
     (electric-pair-mode 1)
+    (make-backup-files nil)
+    (scroll-step 1)
+    (major-mode 'text-mode)
+    (kill-whole-line t)
+    (vc-follow-symlinks nil)
+    (show-paren-delay 0)
 
     :config
     (defalias 'yes-or-no-p 'y-or-n-p)
@@ -85,8 +84,6 @@
     (add-to-list 'initial-frame-alist `(font . ,font-str))
     (add-to-list 'default-frame-alist `(font . ,font-str))))
 
-(add-to-list 'load-path (concat user-emacs-directory "config"))
-(add-to-list 'load-path (concat user-emacs-directory "extra"))
 
 (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
   (use-package exec-path-from-shell
@@ -151,7 +148,7 @@
 (use-package web-mode
   :ensure t
   :defer t
-    :mode
+  :mode
   (("\\.phtml\\'" . web-mode)
    ("\\.tpl\\.php\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
@@ -162,6 +159,8 @@
 
 (use-package org
   :mode (("\\.org$". org-mode)))
+
+(add-to-list 'load-path (concat user-emacs-directory "config"))
 
 (load "custom/indentation")
 (load "custom/keymap")
