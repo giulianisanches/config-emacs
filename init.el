@@ -37,17 +37,6 @@
     (setq vc-follow-symlinks nil)
     (setq show-paren-delay 0)
 
-    :hook
-    (before-save-hook . delete-trailing-whitespace)
-    (emacs-lisp-mode-hook . enable-paredit-mode)
-
-    :config
-    (defalias 'yes-or-no-p 'y-or-n-p)
-    (set-default 'truncate-partial-width-windows nil)
-    (set-default 'truncate-lines t)
-    (put 'downcase-region 'disabled nil)
-    (put 'upcase-region 'disabled nil)
-
     :custom
     (use-short-answers t)
     (menu-bar-mode -1)
@@ -58,19 +47,30 @@
     (line-number-mode 1)
     (column-number-mode 1)
     (show-paren-mode 1)
-    (electric-pair-mode 1))
+    (electric-pair-mode 1)
 
-(defvar local-default-font)
+    :config
+    (defalias 'yes-or-no-p 'y-or-n-p)
+    (set-default 'truncate-partial-width-windows nil)
+    (set-default 'truncate-lines t)
+    (put 'downcase-region 'disabled nil)
+    (put 'upcase-region 'disabled nil)
+
+    :hook
+    (before-save-hook . delete-trailing-whitespace)
+    (emacs-lisp-mode-hook . enable-paredit-mode))
+
+(defvar local-default-font nil)
 
 (setq local-default-font
-      (cond ((eq system-type 'windows-nt) "Consolas-16")
-            ((eq system-type 'gnu/linux) "JetBrainsMonoNL Nerd Font Mono-17")
+      (cond ((eq system-type 'windows-nt) '(:family "Consolas" :height 160))
+            ((eq system-type 'gnu/linux)  '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
             (t nil)))
 
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
-  (setq local-default-font "JetBrainsMonoNL Nerd Font Mono-17")
+  (setq local-default-font '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)))
 
@@ -78,7 +78,12 @@
   (set-frame-size (selected-frame) 110 50))
 
 (when local-default-font
-  (add-to-list 'initial-frame-alist `(font . ,local-default-font)))
+  (apply #'set-face-attribute 'default nil local-default-font)
+  (let ((font-str (format "%s-%d"
+                          (plist-get local-default-font :family)
+                          (/ (plist-get local-default-font :height) 10))))
+    (add-to-list 'initial-frame-alist `(font . ,font-str))
+    (add-to-list 'default-frame-alist `(font . ,font-str))))
 
 (add-to-list 'load-path (concat user-emacs-directory "config"))
 (add-to-list 'load-path (concat user-emacs-directory "extra"))
