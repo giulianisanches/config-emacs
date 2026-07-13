@@ -28,6 +28,16 @@
 
     :custom
     (use-short-answers t)
+    (make-backup-files nil)
+    (scroll-step 1)
+    (major-mode 'text-mode)
+    (kill-whole-line t)
+    (vc-follow-symlinks nil)
+    (show-paren-delay 0)
+    (tab-width 4)
+    (tab-stop-list (number-sequence 4 120 4))
+
+    :config
     (menu-bar-mode -1)
     (tool-bar-mode -1)
     (scroll-bar-mode -1)
@@ -37,17 +47,8 @@
     (column-number-mode 1)
     (show-paren-mode 1)
     (electric-pair-mode 1)
-    (make-backup-files nil)
-    (scroll-step 1)
-    (major-mode 'text-mode)
-    (kill-whole-line t)
-    (vc-follow-symlinks nil)
-    (show-paren-delay 0)
-    (tab-width 4)
     (indent-tabs-mode nil)
-    (tab-stop-list (number-sequence 4 120 4))
 
-    :config
     (defalias 'yes-or-no-p 'y-or-n-p)
     (set-default 'truncate-partial-width-windows nil)
     (set-default 'truncate-lines t)
@@ -81,22 +82,22 @@
 
     :hook
     (before-save-hook . delete-trailing-whitespace)
-    (emacs-lisp-mode-hook . enable-paredit-mode)
+    ; (emacs-lisp-mode-hook . enable-paredit-mode)
 
     :bind
     (("RET" . newline-and-indent)
      ("C-c f" . recentf-open-files)
      ("C-c r" . revert-buffer)
-     ("<C-tab>" . buffer-menu))
+     ("<C-tab>" . buffer-menu)))
 
 
-(when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
-  (use-package exec-path-from-shell
-    :ensure t
-
-    :config
-    (exec-path-from-shell-initialize)))
-
+; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
+;   (use-package exec-path-from-shell
+;     :ensure t
+;
+;     :config
+;     (exec-path-from-shell-initialize)))
+;
 (defun python-venv-autoload ()
   "Automatically activates pyvenv version if .venv directory exists."
   (f-traverse-upwards
@@ -110,13 +111,13 @@
 
 (use-package projectile
   :ensure t
- 
+
   :init
   (projectile-mode +1)
- 
+
   :config
   (setq projectile-project-search-path '(("~/dev/src/" . 3)))
-  
+
   :bind
   (("s-p" . projectile-command-map)
    ;; Recommended keymap prefix on Windows/Linux
@@ -173,8 +174,11 @@
 (use-package catppuccin-theme
   :ensure t
 
+  :custom
+  (catppuccin-flavor 'mocha)
+
   :config
-  (catppuccin-flavor 'mocha))
+  (load-theme 'catppuccin :no-confirm))
 
 (use-package markdown-mode
   :ensure t
@@ -230,7 +234,7 @@
     (add-to-list 'eglot-server-programs
                 '((go-mode go-ts-mode)
                 . ("gopls")))
-    
+
     :hook
     (eglot-managed-mode-hook . (lambda ()
                                 (flymake-mode 1)
@@ -238,7 +242,7 @@
 
 (use-package treesit
   :ensure nil
- 
+
   :config
   (setq treesit-language-source-alist
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
@@ -249,7 +253,7 @@
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
      (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
-  
+
     ;; Auto-install missing grammars
     (dolist (lang treesit-language-source-alist)
     (unless (treesit-language-available-p (car lang))
@@ -259,8 +263,8 @@
     (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)) 
-    (add-to-list 'auto-mode-alist '("\\.sh\\.zsh\\'" . bash-ts-mode)) 
-    (add-to-list 'auto-mode-alist '("\\.yml\\.yaml\\'" . yaml-ts-mode)) 
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.sh\\.zsh\\'" . bash-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.yml\\.yaml\\'" . yaml-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode)))

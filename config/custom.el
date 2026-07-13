@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("d91ef4e714f05fff2070da7ca452980999f5361209e679ee988e3c432df24347"
-     default))
+	 default))
  '(delete-selection-mode nil)
  '(erc-nick-uniquifier "_")
  '(frame-background-mode 'dark)
