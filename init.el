@@ -209,9 +209,9 @@
     :ensure nil
 
     :config
+    (setq tramp-default-method "sftp")
     (if (eq system-type 'windows-nt)
-        (setq tramp-default-method "plink")
-    (setq tramp-default-method "sftp"))
+        (setq tramp-default-method "plink"))
 
     (setq tramp-auto-save-directory temporary-file-directory))
 
@@ -229,12 +229,12 @@
 
     (add-to-list 'eglot-server-programs
                 '((go-mode go-ts-mode)
-                . ("gopls"))))
+                . ("gopls")))
     
     :hook
     (eglot-managed-mode-hook . (lambda ()
                                 (flymake-mode 1)
-                                (eldoc-mode 1)))
+                                (eldoc-mode 1))))
 
 (use-package treesit
   :ensure nil
