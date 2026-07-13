@@ -16,3 +16,5 @@ server/server
 ido.last
 ac-comphist.dat
 network-security.data
+*tree-sitter*
+history
