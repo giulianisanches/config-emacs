@@ -4,6 +4,14 @@
 ;; Ryan McGuire Emacs cofiguration bundle: http://github.com/EnigmaCurry/emacs
 ;; Chris Wanstrath http://github.com/defunkt/emacs
 
+(if init-file-debug
+    (setq use-package-verbose t
+        use-package-expand-minimally nil
+        use-package-compute-statistics t
+        debug-on-error t)
+(setq use-package-verbose nil
+        use-package-expand-minimally t))
+
 (setq package-archives
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("melpa" . "https://melpa.org/packages/")
