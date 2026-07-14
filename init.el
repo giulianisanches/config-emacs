@@ -36,6 +36,9 @@
     (show-paren-delay 0)
     (tab-width 4)
     (tab-stop-list (number-sequence 4 120 4))
+	(tab-always-indent 'complete)
+	(text-mode-ispell-word-completion nil)
+	(read-extended-command-predicate #'command-completion-default-include-p)
 
     :config
     (menu-bar-mode -1)
@@ -79,7 +82,6 @@
                             (/ (plist-get local-default-font :height) 10))))
         (add-to-list 'initial-frame-alist `(font . ,font-str))
         (add-to-list 'default-frame-alist `(font . ,font-str))))
-	(setq tab-always-indent 'complete)
 
     :hook
     (before-save-hook . delete-trailing-whitespace)
@@ -157,7 +159,8 @@
   ;; Activate orderless completion
   (completion-styles '(orderless basic))
   ;; Enable partial completion for file wildcard support
-  (completion-category-overrides '((file (styles partial-completion)))))
+  (completion-category-overrides '((file (styles partial-completion))))
+  (completion-category-defaults nil))
 
 (use-package consult
   :ensure t
@@ -188,6 +191,7 @@
   (global-corfu-mode)
 
   :custom
+  (corfu-auto t)
   (corfu-cycle t)
   (corfu-preview-current nil)
   (corfu-min-width 20)
@@ -277,7 +281,7 @@
 
     (add-to-list 'eglot-server-programs
                 '((python-mode python-ts-mode)
-                . ("basedpyright")))
+                . ("basedpyright-langserver" "--stdio")))
 
     (add-to-list 'eglot-server-programs
                 '((go-mode go-ts-mode)
@@ -286,7 +290,8 @@
     :hook
     (eglot-managed-mode-hook . (lambda ()
                                 (flymake-mode 1)
-                                (eldoc-mode 1))))
+                                (eldoc-mode 1)))
+	(prog-mode . eglot-ensure))
 
 (use-package treesit
   :ensure nil
@@ -316,7 +321,8 @@
     (add-to-list 'auto-mode-alist '("\\.sh\\.zsh\\'" . bash-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.yml\\.yaml\\'" . yaml-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode)))
+    (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
+	(add-to-list 'auto-mode-alist '("\\.go\\'". go-ts-mode)))
 
 (use-package puppet-ts-mode
   :ensure t
