@@ -79,6 +79,7 @@
                             (/ (plist-get local-default-font :height) 10))))
         (add-to-list 'initial-frame-alist `(font . ,font-str))
         (add-to-list 'default-frame-alist `(font . ,font-str))))
+	(setq tab-always-indent 'complete)
 
     :hook
     (before-save-hook . delete-trailing-whitespace)
@@ -89,7 +90,6 @@
      ("C-c f" . recentf-open-files)
      ("C-c r" . revert-buffer)
      ("<C-tab>" . buffer-menu)))
-
 
 ; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
 ;   (use-package exec-path-from-shell
@@ -129,9 +129,6 @@
 (use-package magit
   :ensure t)
 
-(use-package treemacs
-  :ensure t)
-
 (use-package vertico
   :ensure t
 
@@ -140,16 +137,70 @@
 
   :custom
   (vertico-cycle t)
-  (vertico-reverse-mode t))
+  (vertico-reverse-mode t)
+
+  :bind (:map vertico-map
+    ;; Use page-up/down to scroll vertico buffer, like ivy does by default.
+    ("<prior>" . 'vertico-scroll-down)
+    ("<next>"  . 'vertico-scroll-up)))
+
+(use-package vertico-directory
+  :ensure nil
+
+  :after vertico
+
+  :bind (:map vertico-map
+    ("DEL" . vertico-directory-delete-char)))
+
+(use-package orderless
+  :ensure t
+
+  :custom
+  ;; Activate orderless completion
+  (completion-styles '(orderless basic))
+  ;; Enable partial completion for file wildcard support
+  (completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package consult
-  :ensure t)
+  :ensure t
+
+  :custom
+  ;; Disable preview
+  (consult-preview-key nil)
+
+  :bind
+  (("C-x b" . 'consult-buffer)    ;; Switch buffer, including recentf and bookmarks
+   ("M-l"   . 'consult-git-grep)  ;; Search inside a project
+   ("M-y"   . 'consult-yank-pop)  ;; Paste by selecting the kill-ring
+   ("M-s"   . 'consult-line)      ;; Search current buffer, like swiper
+   ))
+
+(use-package embark
+  :ensure t
+
+  :bind
+  (("C-."   . embark-act)       ;; Begin the embark process
+   ("C-;"   . embark-dwim)      ;; good alternative: M-.
+   ("C-h B" . embark-bindings))) ;; alternative for `describe-bindings'
 
 (use-package corfu
   :ensure t
 
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+
+  :custom
+  (corfu-cycle t)
+  (corfu-preview-current nil)
+  (corfu-min-width 20)
+  (corfu-on-exact-match 'insert)
+  (corfu-quit-no-match t)
+  (corfu-quit-at-boundary t)
+
+  :config
+  (setq corfu-popupinfo-delay '(1.25, 0.5))
+  (corfu-popupinfo-mode 1))
+
 
 (use-package pyvenv
   :ensure t
@@ -185,9 +236,8 @@
 
   :defer t
 
-  :config
+  :custom
   (markdown-italic-underscore t)
-  (markdown-command "pandoc")
   (markdown-asymmetric-header t))
 
 (use-package web-mode
@@ -252,7 +302,8 @@
      (python "https://github.com/tree-sitter/tree-sitter-python")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
      (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")))
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	 (puppet "https://github.com/smoeding/tree-sitter-puppet")))
 
     ;; Auto-install missing grammars
     (dolist (lang treesit-language-source-alist)
@@ -268,3 +319,11 @@
     (add-to-list 'auto-mode-alist '("\\.yml\\.yaml\\'" . yaml-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode)))
+
+(use-package puppet-ts-mode
+  :ensure t
+
+  :defer t
+
+  :config
+  (add-to-list 'auto-mode-alist '("\\.pp\\'" . puppet-ts-mode)))
