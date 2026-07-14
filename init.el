@@ -113,15 +113,13 @@
   :ensure t
 
   :init
-  (projectile-mode +1)
+  (projectile-mode t)
 
   :config
   (setq projectile-project-search-path '(("~/dev/src/" . 3)))
 
   :bind
-  (("s-p" . projectile-command-map)
-   ;; Recommended keymap prefix on Windows/Linux
-   ("C-c p" . projectile-command-map))
+  (("C-c C-p" . projectile-command-map))
 
   :hook
   (projectile-after-switch-project-hook . python-venv-autoload))
@@ -133,7 +131,7 @@
   :ensure t
 
   :init
-  (vertico-mode)
+  (vertico-mode +1)
 
   :custom
   (vertico-cycle t)
