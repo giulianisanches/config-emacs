@@ -111,22 +111,6 @@
              ;;(setq python-shell-virtualenv-root venv-path))
              t)))))
 
-;; (use-package projectile
-;;   :ensure t
-
-;;   :init
-;;   (projectile-mode t)
-
-;;   :custom
-;;   (projectile-project-search-path '(("~/dev/src/" . 3)))
-
-;;   :bind
-;;   (("s-p" . projectile-command-map)
-;;    ("C-c p" . projectile-command-map))
-
-;;   :hook
-;;   (projectile-after-switch-project-hook . python-venv-autoload))
-
 (defun config/emacs/find-projects (start-dir dir-list max-depth)
   "Scan START-DIR for project roots and remember them with `project.el'.
 Descend up to MAX-DEPTH levels below START-DIR. A directory is a project
@@ -146,7 +130,6 @@ search keeps descending into them so nested projects are also found."
 
   :config
   (config/emacs/find-projects (expand-file-name "~/dev/src") '(".git") 3))
-
 
 (use-package magit
   :ensure t)
