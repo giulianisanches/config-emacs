@@ -136,7 +136,7 @@ search keeps descending into them so nested projects are also found."
   (when (> max-depth 0)
     (dolist (entry (directory-files start-dir t directory-files-no-dot-files-regexp))
       (when (file-directory-p entry)
-        (when (seq-some (lambda (marker) (f-exists? (f-expand marker entry))) dir-list)
+        (when (seq-some (lambda (marker) (file-exists-p (expand-file-name marker entry))) dir-list)
           (when-let ((pr (project-current nil entry)))
             (project-remember-project pr)))
         (config/emacs/find-projects entry dir-list (1- max-depth))))))
@@ -145,7 +145,8 @@ search keeps descending into them so nested projects are also found."
   :ensure nil
 
   :config
-  (setq project-vc-merge-submodules nil))
+  (config/emacs/find-projects (expand-file-name "~/dev/src") '(".git") 3))
+
 
 (use-package magit
   :ensure t)
