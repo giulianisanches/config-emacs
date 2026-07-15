@@ -100,7 +100,7 @@
 ;     :config
 ;     (exec-path-from-shell-initialize)))
 ;
-(defun python-venv-autoload ()
+(defun config/emacs/venv-autoload ()
   "Automatically activates pyvenv version if .venv directory exists."
   (f-traverse-upwards
    (lambda (path)
@@ -111,20 +111,41 @@
              ;;(setq python-shell-virtualenv-root venv-path))
              t)))))
 
-(use-package projectile
-  :ensure t
+;; (use-package projectile
+;;   :ensure t
 
-  :init
-  (projectile-mode t)
+;;   :init
+;;   (projectile-mode t)
+
+;;   :custom
+;;   (projectile-project-search-path '(("~/dev/src/" . 3)))
+
+;;   :bind
+;;   (("s-p" . projectile-command-map)
+;;    ("C-c p" . projectile-command-map))
+
+;;   :hook
+;;   (projectile-after-switch-project-hook . python-venv-autoload))
+
+(defun config/emacs/find-projects (start-dir dir-list max-depth)
+  "Scan START-DIR for project roots and remember them with `project.el'.
+Descend up to MAX-DEPTH levels below START-DIR. A directory is a project
+root when it contains any entry named in DIR-LIST (e.g. \\='(\".git\")).
+Matched directories are registered via `project-remember-project'; the
+search keeps descending into them so nested projects are also found."
+  (when (> max-depth 0)
+    (dolist (entry (directory-files start-dir t directory-files-no-dot-files-regexp))
+      (when (file-directory-p entry)
+        (when (seq-some (lambda (marker) (f-exists? (f-expand marker entry))) dir-list)
+          (when-let ((pr (project-current nil entry)))
+            (project-remember-project pr)))
+        (config/emacs/find-projects entry dir-list (1- max-depth))))))
+
+(use-package project
+  :ensure nil
 
   :config
-  (setq projectile-project-search-path '(("~/dev/src/" . 3)))
-
-  :bind
-  (("C-c C-p" . projectile-command-map))
-
-  :hook
-  (projectile-after-switch-project-hook . python-venv-autoload))
+  (setq project-vc-merge-submodules nil))
 
 (use-package magit
   :ensure t)
@@ -255,6 +276,9 @@
    ("\\.erb\\'" . web-mode)
    ("\\.mustache\\'" . web-mode)
    ("\\.djhtml\\'" . web-mode)))
+
+(use-package agent-shell
+  :ensure t)
 
 (use-package org
   :ensure nil
