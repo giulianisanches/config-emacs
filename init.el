@@ -73,7 +73,7 @@
     (add-to-list 'default-frame-alist '(ns-appearance . dark)))
 
     (when window-system
-    (set-frame-size (selected-frame) 110 50))
+    (set-frame-size (selected-frame) 110 45))
 
     (when local-default-font
     (apply #'set-face-attribute 'default nil local-default-font)
@@ -92,24 +92,6 @@
      ("C-c f" . recentf-open-files)
      ("C-c r" . revert-buffer)
      ("<C-tab>" . buffer-menu)))
-
-; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
-;   (use-package exec-path-from-shell
-;     :ensure t
-;
-;     :config
-;     (exec-path-from-shell-initialize)))
-;
-(defun config/emacs/venv-autoload ()
-  "Automatically activates pyvenv version if .venv directory exists."
-  (f-traverse-upwards
-   (lambda (path)
-     (let ((venv-path (f-expand ".venv" path)))
-       (if (f-exists? venv-path)
-           (progn
-             (pyvenv-activate venv-path))
-             ;;(setq python-shell-virtualenv-root venv-path))
-             t)))))
 
 (defun config/emacs/find-projects (start-dir dir-list max-depth)
   "Scan START-DIR for project roots and remember them with `project.el'.
@@ -208,12 +190,6 @@ search keeps descending into them so nested projects are also found."
   (setq corfu-popupinfo-delay '(1.25, 0.5))
   (corfu-popupinfo-mode 1))
 
-
-(use-package pyvenv
-  :ensure t
-
-  :defer t)
-
 (use-package eldoc-box
   :ensure t)
 
@@ -279,27 +255,6 @@ search keeps descending into them so nested projects are also found."
 
     (setq tramp-auto-save-directory temporary-file-directory))
 
-(use-package eglot
-    :ensure nil
-
-    :config
-    (add-to-list 'eglot-server-programs
-                '((json-mode js-mode js-ts-mode typescript-ts-mode tsx-ts-mode)
-                . ("typescript-language-server" "--stdio")))
-
-    (add-to-list 'eglot-server-programs
-                '((python-mode python-ts-mode)
-                . ("basedpyright-langserver" "--stdio")))
-
-    (add-to-list 'eglot-server-programs
-                '((go-mode go-ts-mode)
-                . ("gopls")))
-
-    :hook
-    (eglot-managed-mode-hook . (lambda ()
-                                (flymake-mode 1)
-                                (eldoc-mode 1)))
-	(prog-mode . eglot-ensure))
 
 (use-package treesit
   :ensure nil
@@ -308,12 +263,12 @@ search keeps descending into them so nested projects are also found."
   (setq treesit-language-source-alist
    '((bash "https://github.com/tree-sitter/tree-sitter-bash")
      (go "https://github.com/tree-sitter/tree-sitter-go")
-     (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+     (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
      (json "https://github.com/tree-sitter/tree-sitter-json")
      (python "https://github.com/tree-sitter/tree-sitter-python")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
 	 (puppet "https://github.com/smoeding/tree-sitter-puppet")))
 
     ;; Auto-install missing grammars
@@ -339,3 +294,43 @@ search keeps descending into them so nested projects are also found."
 
   :config
   (add-to-list 'auto-mode-alist '("\\.pp\\'" . puppet-ts-mode)))
+
+(use-package hcl-mode
+  :ensure t
+
+  :defer t)
+
+(use-package terraform-mode
+  :ensure t
+
+  :defer t)
+
+(use-package eglot
+    :ensure nil
+
+    :config
+    (add-to-list 'eglot-server-programs
+                '((json-mode js-mode js-ts-mode typescript-ts-mode tsx-ts-mode)
+                . ("typescript-language-server" "--stdio")))
+
+    (add-to-list 'eglot-server-programs
+                '((python-mode python-ts-mode)
+                . ("basedpyright-langserver" "--stdio")))
+
+    (add-to-list 'eglot-server-programs
+                '((go-mode go-ts-mode)
+                . ("gopls")))
+
+    :hook
+    (eglot-managed-mode-hook . (lambda ()
+                                (flymake-mode 1)
+                                (eldoc-mode 1)))
+	(prog-mode . eglot-ensure))
+
+
+; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
+;   (use-package exec-path-from-shell
+;     :ensure t
+;
+;     :config
+;     (exec-path-from-shell-initialize)))
