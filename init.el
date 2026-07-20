@@ -273,27 +273,27 @@ search keeps descending into them so nested projects are also found."
 
     ;; Auto-install missing grammars
     (dolist (lang treesit-language-source-alist)
-    (unless (treesit-language-available-p (car lang))
+      (unless (treesit-language-available-p (car lang))
         (treesit-install-language-grammar (car lang))))
 
-    ;; Associate file extensions
-    (add-to-list 'auto-mode-alist '("\\.json\\'" . json-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.js\\'" . js-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.sh\\.zsh\\'" . bash-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.yml\\.yaml\\'" . yaml-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
-	(add-to-list 'auto-mode-alist '("\\.go\\'". go-ts-mode)))
+  :mode
+  (("\\.json\\'" . json-ts-mode)
+   ("\\.ts\\'" . typescript-ts-mode)
+   ("\\.js\\'" . js-ts-mode)
+   ("\\.tsx\\'" . tsx-ts-mode)
+   ("\\.sh\\.zsh\\'" . bash-ts-mode)
+   ("\\.yml\\.yaml\\'" . yaml-ts-mode)
+   ("\\.py\\'" . python-ts-mode)
+   ("\\.toml\\'" . toml-ts-mode)
+   ("\\.go\\'". go-ts-mode)))
 
 (use-package puppet-ts-mode
   :ensure t
 
   :defer t
 
-  :config
-  (add-to-list 'auto-mode-alist '("\\.pp\\'" . puppet-ts-mode)))
+  :mode
+  (("\\.pp\\'" . puppet-ts-mode)))
 
 (use-package hcl-mode
   :ensure t
