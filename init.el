@@ -230,7 +230,8 @@ search keeps descending into them so nested projects are also found."
 
   :mode
   (("\\.phtml\\'" . web-mode)
-   ("\\.tpl\\.php\\'" . web-mode)
+   ("\\.tpl\\'" . web-mode)
+   ("\\.php\\'" . web-mode)
    ("\\.[agj]sp\\'" . web-mode)
    ("\\.as[cp]x\\'" . web-mode)
    ("\\.erb\\'" . web-mode)
@@ -284,10 +285,11 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
      (go "https://github.com/tree-sitter/tree-sitter-go")
      (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
      (json "https://github.com/tree-sitter/tree-sitter-json")
+	 (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
      (python "https://github.com/tree-sitter/tree-sitter-python")
      (toml "https://github.com/tree-sitter/tree-sitter-toml")
-     (tsx "https://github.com/tree-sitter/tree-sitter-typescript")
-     (typescript "https://github.com/tree-sitter/tree-sitter-typescript")
+     (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
+     (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")
 	 (puppet "https://github.com/smoeding/tree-sitter-puppet")))
 
     ;; Auto-install missing grammars
@@ -301,7 +303,7 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
    ("\\.js\\'" . js-ts-mode)
    ("\\.tsx\\'" . tsx-ts-mode)
    ("\\.sh\\.zsh\\'" . bash-ts-mode)
-   ("\\.yml\\.yaml\\'" . yaml-ts-mode)
+   ("\\.y[a]ml\\'" . yaml-ts-mode)
    ("\\.py\\'" . python-ts-mode)
    ("\\.toml\\'" . toml-ts-mode)
    ("\\.go\\'". go-ts-mode)))
@@ -341,7 +343,11 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
                 . ("yaml-language-server" "--stdio")))
 
     (add-to-list 'eglot-server-programs
-                '((json-mode js-mode js-ts-mode typescript-ts-mode tsx-ts-mode)
+                '((json-mode json-ts-mode)
+                . ("vscode-json-languageserver" "--stdio")))
+
+    (add-to-list 'eglot-server-programs
+                '((js-mode js-ts-mode typescript-ts-mode tsx-ts-mode)
                 . ("typescript-language-server" "--stdio")))
 
     :hook
