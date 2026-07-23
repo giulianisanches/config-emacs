@@ -34,11 +34,14 @@
     (kill-whole-line t)
     (vc-follow-symlinks nil)
     (show-paren-delay 0)
-    (tab-width 4)
-    (tab-stop-list (number-sequence 4 120 4))
 	(tab-always-indent 'complete)
 	(text-mode-ispell-word-completion nil)
 	(read-extended-command-predicate #'command-completion-default-include-p)
+	;; indent configuration
+	(tab-width 4)
+	(c-basic-offset 4)
+	(yaml-basic-offset 4)
+    (tab-stop-list (number-sequence 4 120 4))
 
     :config
     (menu-bar-mode -1)
@@ -85,7 +88,7 @@
 
     :hook
     (before-save-hook . delete-trailing-whitespace)
-    ; (emacs-lisp-mode-hook . enable-paredit-mode)
+    ;;(emacs-lisp-mode-hook . enable-paredit-mode)
 
     :bind
     (("RET" . newline-and-indent)
@@ -303,7 +306,7 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
    ("\\.js\\'" . js-ts-mode)
    ("\\.tsx\\'" . tsx-ts-mode)
    ("\\.sh\\.zsh\\'" . bash-ts-mode)
-   ("\\.y[a]ml\\'" . yaml-ts-mode)
+   ("\\.ya?ml\\'" . yaml-ts-mode)
    ("\\.py\\'" . python-ts-mode)
    ("\\.toml\\'" . toml-ts-mode)
    ("\\.go\\'". go-ts-mode)))
