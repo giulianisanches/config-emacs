@@ -114,7 +114,7 @@ search keeps descending into them so nested projects are also found."
   :ensure nil
 
   :config
-  (config/emacs/find-projects (expand-file-name "~/dev/src") '(".git") 3))
+  (gds/find-projects (expand-file-name "~/dev/src") '(".git") 3))
 
 (use-package magit
   :ensure t)
@@ -319,15 +319,22 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   :mode
   (("\\.pp\\'" . puppet-ts-mode)))
 
-(use-package hcl-mode
-  :ensure t
-
-  :defer t)
-
 (use-package terraform-mode
   :ensure t
 
-  :defer t)
+  :defer t
+
+  :mode
+  (("\\.tf\\'" . terraform-mode)))
+
+(use-package hcl-mode
+  :ensure nil
+
+  :after terraform-mode
+
+  :mode
+  (("\\.hcl\\'" . hcl-mode)))
+
 
 (use-package eglot
   :ensure nil
