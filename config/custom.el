@@ -9,11 +9,10 @@
  '(delete-selection-mode nil)
  '(erc-nick-uniquifier "_")
  '(frame-background-mode 'dark)
- '(package-selected-packages
-   '(ace-window acp catppuccin-theme cfrs consult corfu eldoc-box embark
-				ghostel ht hydra magit markdown-mode orderless pfuture
-				puppet-ts-mode pyvenv shell-maker terraform-mode
-				vertico web-mode yasnippet))
+ '(package-selected-packages nil)
+ '(package-vc-selected-packages
+   '((terraform-ts-mode :url
+						"https://codeberg.org/ccbash-oss/terraform-ts-mode")))
  '(uniquify-buffer-name-style 'forward nil (uniquify)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

@@ -293,6 +293,8 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
 		  (toml "https://github.com/tree-sitter/tree-sitter-toml")
 		  (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "tsx/src")
 		  (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "v0.23.2" "typescript/src")
+		  (hcl "https://github.com/tree-sitter-grammars/tree-sitter-hcl")
+		  (terraform "https://github.com/tree-sitter-grammars/tree-sitter-hcl")
 		  (puppet "https://github.com/smoeding/tree-sitter-puppet")))
 
   ;; Auto-install missing grammars
@@ -319,22 +321,15 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   :mode
   (("\\.pp\\'" . puppet-ts-mode)))
 
-(use-package terraform-mode
-  :ensure t
+(use-package terraform-ts-mode
+  :vc (:url "https://codeberg.org/ccbash-oss/terraform-ts-mode"
+       :rev :newest)
 
   :defer t
 
   :mode
-  (("\\.tf\\'" . terraform-mode)))
-
-(use-package hcl-mode
-  :ensure nil
-
-  :after terraform-mode
-
-  :mode
-  (("\\.hcl\\'" . hcl-mode)))
-
+  (("\\.tf\\'" . terraform-ts-mode)
+   ("\\.hcl\\'" . terraform-ts-mode)))
 
 (use-package eglot
   :ensure nil
@@ -361,7 +356,7 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
                  . ("typescript-language-server" "--stdio")))
 
   (add-to-list 'eglot-server-programs
-               '((terraform-mode hcl-mode) . ("terraform-ls" "serve")))
+               '((terraform-ts-mode terraform-mode hcl-mode) . ("terraform-ls" "serve")))
 
   :hook
   (eglot-managed-mode-hook . (lambda ()
