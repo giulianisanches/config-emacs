@@ -272,9 +272,9 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   :ensure nil
 
   :config
-  (setq tramp-default-method "sftp")
+  (setq tramp-default-method "ssh")
   (if (eq system-type 'windows-nt)
-      (setq tramp-default-method "plink"))
+      (tramp-default-method "plink"))
 
   (setq tramp-auto-save-directory temporary-file-directory))
 
@@ -359,6 +359,9 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   (add-to-list 'eglot-server-programs
                '((js-mode js-ts-mode typescript-ts-mode tsx-ts-mode)
                  . ("typescript-language-server" "--stdio")))
+
+  (add-to-list 'eglot-server-programs
+               '((terraform-mode hcl-mode) . ("terraform-ls" "serve")))
 
   :hook
   (eglot-managed-mode-hook . (lambda ()
