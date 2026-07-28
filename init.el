@@ -331,6 +331,10 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   (("\\.tf\\'" . terraform-ts-mode)
    ("\\.hcl\\'" . terraform-ts-mode)))
 
+(use-package ansible
+  :ensure t
+  :hook (yaml-ts-mode . ansible-mode))
+
 (use-package eglot
   :ensure nil
 
@@ -357,6 +361,9 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
 
   (add-to-list 'eglot-server-programs
                '((terraform-ts-mode terraform-mode hcl-mode) . ("terraform-ls" "serve")))
+
+  (add-to-list 'eglot-server-programs
+               '(ansible-mode . ("ansible-language-server" "--stdio")))
 
   :hook
   (eglot-managed-mode-hook . (lambda ()
