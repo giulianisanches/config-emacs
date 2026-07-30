@@ -333,7 +333,8 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
 
 (use-package ansible
   :ensure t
-  :hook (yaml-ts-mode . ansible-mode))
+
+  :defer t)
 
 (use-package eglot
   :ensure nil
