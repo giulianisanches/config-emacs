@@ -307,7 +307,7 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
    ("\\.ts\\'" . typescript-ts-mode)
    ("\\.js\\'" . js-ts-mode)
    ("\\.tsx\\'" . tsx-ts-mode)
-   ("\\.sh\\.zsh\\'" . bash-ts-mode)
+   ("\\.z?sh\\'" . bash-ts-mode)
    ("\\.ya?ml\\'" . yaml-ts-mode)
    ("\\.py\\'" . python-ts-mode)
    ("\\.toml\\'" . toml-ts-mode)
