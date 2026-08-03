@@ -373,9 +373,9 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   (prog-mode . eglot-ensure))
 
 
-										; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
-										;   (use-package exec-path-from-shell
-										;     :ensure t
-										;
-										;     :config
-										;     (exec-path-from-shell-initialize)))
+; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
+;   (use-package exec-path-from-shell
+;     :ensure t
+;
+;     :config
+;     (exec-path-from-shell-initialize)))
