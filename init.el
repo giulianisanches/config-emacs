@@ -116,6 +116,16 @@ search keeps descending into them so nested projects are also found."
   :config
   (gds/find-projects (expand-file-name "~/dev/src") '(".git") 3))
 
+(use-package project-x
+  :ensure t
+
+  :after project
+
+  :config
+  (setq project-x-auto-save-delay 5) ; nil to disable autosave
+  (setq project-prompter #'project-x--project-prompt)
+  (project-x-mode 1))
+
 (use-package magit
   :ensure t)
 
@@ -372,7 +382,12 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
                                (eldoc-mode 1)))
   (prog-mode . eglot-ensure))
 
+(use-package flymake
+  :ensure nil
 
+  :bind
+  (("M-n" . 'flymake-goto-next-error)
+   ("M-p" . 'flymake-goto-prev-error)))
 ; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
 ;   (use-package exec-path-from-shell
 ;     :ensure t

@@ -9,7 +9,7 @@
  '(delete-selection-mode nil)
  '(erc-nick-uniquifier "_")
  '(frame-background-mode 'dark)
- '(package-selected-packages '(terraform-ts-mode))
+ '(package-selected-packages nil)
  '(package-vc-selected-packages
    '((terraform-ts-mode :url
 						"https://codeberg.org/ccbash-oss/terraform-ts-mode")))
