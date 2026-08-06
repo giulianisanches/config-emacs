@@ -9,7 +9,11 @@
  '(delete-selection-mode nil)
  '(erc-nick-uniquifier "_")
  '(frame-background-mode 'dark)
- '(package-selected-packages nil)
+ '(package-selected-packages
+   '(ace-window acp ansible catppuccin-theme cfrs consult corfu eldoc-box
+				embark ghostel ht hydra magit markdown-mode orderless
+				pfuture project-x puppet-ts-mode pyvenv shell-maker
+				terraform-ts-mode vertico web-mode yasnippet))
  '(package-vc-selected-packages
    '((terraform-ts-mode :url
 						"https://codeberg.org/ccbash-oss/terraform-ts-mode")))
