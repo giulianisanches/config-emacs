@@ -29,6 +29,7 @@
   :custom
   (use-short-answers t)
   (make-backup-files nil)
+  (auto-save-default nil)
   (scroll-step 1)
   (major-mode 'text-mode)
   (kill-whole-line t)
