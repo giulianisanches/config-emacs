@@ -122,8 +122,9 @@ search keeps descending into them so nested projects are also found."
   :after project
 
   :config
-  (setq project-x-auto-save-delay 5) ; nil to disable autosave
+  (setq project-x-auto-save-delay 10) ; nil to disable autosave
   (setq project-prompter #'project-x--project-prompt)
+  (setq project-x-save-extra-buffers 1)
   (project-x-mode 1))
 
 (use-package magit
