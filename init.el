@@ -43,6 +43,8 @@
   (c-basic-offset 4)
   (yaml-basic-offset 4)
   (tab-stop-list (number-sequence 4 120 4))
+  (use-package-always-ensure t)
+  (use-package-verbose t)
 
   :config
   (menu-bar-mode -1)
@@ -118,8 +120,6 @@ search keeps descending into them so nested projects are also found."
   (gds/find-projects (expand-file-name "~/dev/src") '(".git") 3))
 
 (use-package project-x
-  :ensure t
-
   :after project
 
   :config
@@ -129,13 +129,10 @@ search keeps descending into them so nested projects are also found."
   (project-x-mode 1))
 
 (use-package magit
-  :ensure t)
+  :bind (("C-x g" . magit-status)))
 
 (use-package vertico
-  :ensure t
-
-  :init
-  (vertico-mode +1)
+  :init (vertico-mode +1)
 
   :custom
   (vertico-cycle t)
@@ -147,16 +144,12 @@ search keeps descending into them so nested projects are also found."
 			  ("<next>"  . 'vertico-scroll-up)))
 
 (use-package vertico-directory
-  :ensure nil
-
   :after vertico
 
   :bind (:map vertico-map
 			  ("DEL" . vertico-directory-delete-char)))
 
 (use-package orderless
-  :ensure t
-
   :custom
   ;; Activate orderless completion
   (completion-styles '(orderless basic))
@@ -165,8 +158,6 @@ search keeps descending into them so nested projects are also found."
   (completion-category-defaults nil))
 
 (use-package consult
-  :ensure t
-
   :custom
   ;; Disable preview
   (consult-preview-key nil)
@@ -179,16 +170,12 @@ search keeps descending into them so nested projects are also found."
    ))
 
 (use-package embark
-  :ensure t
-
   :bind
   (("C-."   . embark-act)       ;; Begin the embark process
    ("C-;"   . embark-dwim)      ;; good alternative: M-.
    ("C-h B" . embark-bindings))) ;; alternative for `describe-bindings'
 
 (use-package corfu
-  :ensure t
-
   :init
   (global-corfu-mode)
 
@@ -205,23 +192,18 @@ search keeps descending into them so nested projects are also found."
   (setq corfu-popupinfo-delay '(1.25, 0.5))
   (corfu-popupinfo-mode 1))
 
-(use-package eldoc-box
-  :ensure t)
+(use-package eldoc-box)
 
 (use-package yasnippet
-  :ensure t
-
   :config
   (yas-global-mode 1))
 
 (use-package savehist
-  :ensure t
-
   :init
   (savehist-mode))
 
 (use-package catppuccin-theme
-  :ensure t
+  :defer t
 
   :custom
   (catppuccin-flavor 'macchiato)
@@ -230,8 +212,6 @@ search keeps descending into them so nested projects are also found."
   (load-theme 'catppuccin :no-confirm))
 
 (use-package markdown-mode
-  :ensure t
-
   :defer t
 
   :custom
@@ -239,8 +219,6 @@ search keeps descending into them so nested projects are also found."
   (markdown-asymmetric-header t))
 
 (use-package web-mode
-  :ensure t
-
   :defer t
 
   :mode
@@ -254,7 +232,7 @@ search keeps descending into them so nested projects are also found."
    ("\\.djhtml\\'" . web-mode)))
 
 (use-package ghostel
-  :ensure t
+  :defer t
 
   :bind (("C-x m" . ghostel)
          :map ghostel-semi-char-mode-map
@@ -326,8 +304,6 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
    ("\\.go\\'". go-ts-mode)))
 
 (use-package puppet-ts-mode
-  :ensure t
-
   :defer t
 
   :mode
@@ -344,8 +320,6 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
    ("\\.hcl\\'" . terraform-ts-mode)))
 
 (use-package ansible
-  :ensure t
-
   :defer t)
 
 (use-package eglot
