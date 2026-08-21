@@ -49,10 +49,13 @@
 
 ;; indent configuration
 (setq tab-width 4
-	  c-basic-offset 4
-	  yaml-basic-offset 4
-	  tab-stop-list (number-sequence 4 120 4)
-	  tab-always-indent 'complete)
+      c-basic-offset 4
+      yaml-basic-offset 4
+      tab-stop-list (number-sequence 4 120 4)
+      tab-always-indent 'complete)
+
+(setq tab-bar-close-button-show nil
+      tab-bar-new-button-show nil)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
