@@ -5,19 +5,21 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("d91ef4e714f05fff2070da7ca452980999f5361209e679ee988e3c432df24347"
-	 default))
+     default))
  '(delete-selection-mode nil)
  '(erc-nick-uniquifier "_")
  '(frame-background-mode 'dark)
  '(package-selected-packages
-   '(ace-window acp ansible catppuccin-theme cfrs consult corfu eldoc-box
-				embark ghostel ht hydra magit markdown-mode orderless
-				pfuture project-x puppet-ts-mode pyvenv shell-maker
-				terraform-ts-mode vertico vertico-directory web-mode
-				yasnippet))
+   '(ace-window acp ansible catppuccin-theme cfrs consult corfu
+		difftastic diminish eldoc-box embark
+		exec-path-from-shell ghostel git-timemachine ht hydra
+		markdown-mode orderless paredit pfuture project-x
+		puppet-ts-mode pyvenv rainbow-delimiters rainbow-mode
+		shell-maker terraform-ts-mode ultra-scroll vertico
+		web-mode yasnippet))
  '(package-vc-selected-packages
    '((terraform-ts-mode :url
-						"https://codeberg.org/ccbash-oss/terraform-ts-mode")))
+			"https://codeberg.org/ccbash-oss/terraform-ts-mode")))
  '(uniquify-buffer-name-style 'forward nil (uniquify)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

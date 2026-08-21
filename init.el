@@ -1,103 +1,100 @@
 ;;; init.el --- Emacs configuration
+;; Reference: https://github.com/bbatsov/emacs.d/blob/master/init.el
 
-(use-package emacs
-  :init
-  (setq custom-file (concat user-emacs-directory "config/custom.el"))
-  (load custom-file)
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max (* 1024 1024))
-  (setq inhibit-startup-message t)
-  (setq initial-scratch-message nil)
-  (if init-file-debug
-      (setq use-package-verbose t
-            use-package-expand-minimally nil
-            use-package-compute-statistics t
-            debug-on-error t)
-    (setq use-package-verbose nil
-          use-package-expand-minimally t))
+(setq custom-file (concat user-emacs-directory "config/custom.el"))
 
-  (setq package-archives
-        '(("gnu" . "https://elpa.gnu.org/packages/")
-          ("melpa" . "https://melpa.org/packages/")
-          ("org" . "http://orgmode.org/elpa/")))
+(load custom-file)
 
-  (setq package-archive-priorities
-        '(("gnu" . 3)
-          ("melpa" . 2)
-          ("org" . 1)))
+(setq read-process-output-max (* 1024 1024))
 
-  :custom
-  (use-short-answers t)
-  (make-backup-files nil)
-  (auto-save-default nil)
-  (scroll-step 1)
-  (major-mode 'text-mode)
-  (kill-whole-line t)
-  (vc-follow-symlinks nil)
-  (show-paren-delay 0)
-  (tab-always-indent 'complete)
-  (text-mode-ispell-word-completion nil)
-  (read-extended-command-predicate #'command-completion-default-include-p)
-  ;; indent configuration
-  (tab-width 4)
-  (c-basic-offset 4)
-  (yaml-basic-offset 4)
-  (tab-stop-list (number-sequence 4 120 4))
-  (use-package-always-ensure t)
-  (use-package-verbose t)
+(setq inhibit-startup-message t)
 
-  :config
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  (scroll-bar-mode -1)
-  (tooltip-mode -1)
-  (prefer-coding-system 'utf-8)
-  (line-number-mode 1)
-  (column-number-mode 1)
-  (show-paren-mode 1)
-  (electric-pair-mode 1)
-  (indent-tabs-mode nil)
+(setq use-package-always-ensure t
+	  use-package-verbose t
+      use-package-expand-minimally nil
+      use-package-compute-statistics t
+      debug-on-error nil)
 
-  (defalias 'yes-or-no-p 'y-or-n-p)
-  (set-default 'truncate-partial-width-windows nil)
-  (set-default 'truncate-lines t)
-  (put 'downcase-region 'disabled nil)
-  (put 'upcase-region 'disabled nil)
+(setq package-archives
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
 
-  (defvar local-default-font nil)
+(setq package-archive-priorities
+      '(("gnu" . 3)
+        ("melpa" . 2)
+        ("org" . 1)))
 
-  (setq local-default-font
-        (cond ((eq system-type 'windows-nt) '(:family "Consolas" :height 160))
-              ((eq system-type 'gnu/linux)  '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
-              (t nil)))
+(setq major-mode 'text-mode)
 
-  (when (eq system-type 'darwin)
-    (setq mac-command-modifier 'meta)
-    (setq mac-option-modifier 'super)
-    (setq local-default-font '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
-    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-    (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+(setq ring-bell-function 'ignore)
 
-  (when window-system
-    (set-frame-size (selected-frame) 110 45))
+(setq use-short-answers t)
 
-  (when local-default-font
-    (apply #'set-face-attribute 'default nil local-default-font)
-    (let ((font-str (format "%s-%d"
-                            (plist-get local-default-font :family)
-                            (/ (plist-get local-default-font :height) 10))))
-      (add-to-list 'initial-frame-alist `(font . ,font-str))
-      (add-to-list 'default-frame-alist `(font . ,font-str))))
+(setq make-backup-files nil
+	  auto-save-default nil)
 
-  :hook
-  (before-save-hook . delete-trailing-whitespace)
-  ;;(emacs-lisp-mode-hook . enable-paredit-mode)
+;; nice scrolling
+(setq scroll-margin 0 ; ultra-scroll requires 0 for glitch-free scrolling
+      scroll-conservatively 100000
+      scroll-preserve-screen-position 1)
 
-  :bind
-  (("RET" . newline-and-indent)
-   ("C-c f" . recentf-open-files)
-   ("C-c r" . revert-buffer)
-   ("<C-tab>" . buffer-menu)))
+(set-default 'truncate-partial-width-windows nil)
+(set-default 'truncate-lines t)
+
+(setq kill-whole-line t)
+(setq vc-follow-symlinks nil)
+(setq show-paren-delay 0)
+(setq read-extended-command-predicate #'command-completion-default-include-p)
+
+;; indent configuration
+(setq tab-width 4
+	  c-basic-offset 4
+	  yaml-basic-offset 4
+	  tab-stop-list (number-sequence 4 120 4)
+	  tab-always-indent 'complete)
+
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(line-number-mode 1)
+(column-number-mode 1)
+
+(tooltip-mode -1)
+
+(prefer-coding-system 'utf-8)
+(show-paren-mode 1)
+(indent-tabs-mode nil)
+(blink-cursor-mode -1)
+
+(setq local-default-font
+      (cond ((eq system-type 'windows-nt) '(:family "Consolas" :height 160))
+            ((eq system-type 'gnu/linux)  '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
+            (t nil)))
+
+(when (eq system-type 'darwin)
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier 'super)
+  (setq local-default-font '(:family "JetBrainsMonoNL Nerd Font Mono" :height 170))
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark)))
+
+(when window-system
+  (set-frame-size (selected-frame) 110 45))
+
+(when local-default-font
+  (apply #'set-face-attribute 'default nil local-default-font)
+  (let ((font-str (format "%s-%d"
+                          (plist-get local-default-font :family)
+                          (/ (plist-get local-default-font :height) 10))))
+    (add-to-list 'initial-frame-alist `(font . ,font-str))
+    (add-to-list 'default-frame-alist `(font . ,font-str))))
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(global-set-key (kbd "RET") 'newline-and-indent)
+
+(global-set-key (kbd "<C-tab>") 'buffer-menu)
 
 (defun gds/find-projects (start-dir dir-list max-depth)
   "Scan START-DIR for project roots and remember them with `project.el'.
@@ -113,11 +110,22 @@ search keeps descending into them so nested projects are also found."
             (project-remember-project pr)))
         (gds/find-projects entry dir-list (1- max-depth))))))
 
-(use-package project
-  :ensure nil
-
+;;
+;; external packages
+;;
+(use-package diminish
   :config
-  (gds/find-projects (expand-file-name "~/dev/src") '(".git") 3))
+  (diminish 'abbrev-mode)
+  (diminish 'eldoc-mode))
+
+(use-package ultra-scroll
+  :config
+  (ultra-scroll-mode +1))
+
+(setq package-install-upgrade-built-in t)
+(use-package transient)
+
+(use-package compat)
 
 (use-package project-x
   :after project
@@ -143,7 +151,10 @@ search keeps descending into them so nested projects are also found."
 			  ("<prior>" . 'vertico-scroll-down)
 			  ("<next>"  . 'vertico-scroll-up)))
 
+;; part of vertico
 (use-package vertico-directory
+  :ensure nil
+
   :after vertico
 
   :bind (:map vertico-map
@@ -198,13 +209,7 @@ search keeps descending into them so nested projects are also found."
   :config
   (yas-global-mode 1))
 
-(use-package savehist
-  :init
-  (savehist-mode))
-
 (use-package catppuccin-theme
-  :defer t
-
   :custom
   (catppuccin-flavor 'macchiato)
 
@@ -322,6 +327,139 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
 (use-package ansible
   :defer t)
 
+(use-package git-timemachine
+  :bind (("C-c g" . git-timemachine)
+         ("s-g" . git-timemachine)))
+
+(use-package difftastic-bindings
+  :ensure difftastic
+  :config
+  (difftastic-bindings-mode +1))
+
+(use-package paredit
+  :hook ((emacs-lisp-mode
+          lisp-interaction-mode
+          ielm-mode
+          lisp-mode
+          eval-expression-minibuffer-setup) . paredit-mode)
+  :config
+  ;; paredit steals RET for auto-newline-and-indent, which is annoying
+  (define-key paredit-mode-map (kbd "RET") nil)
+  (add-hook 'paredit-mode-hook (lambda () (electric-pair-local-mode -1)))
+  (diminish 'paredit-mode "()"))
+
+(use-package exec-path-from-shell
+  :config
+  ;; only needed for GUI Emacs on macOS, where the shell env isn't inherited
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)))
+
+(use-package rainbow-delimiters
+  :defer t)
+
+(use-package rainbow-mode
+  :hook prog-mode
+  :config
+  (diminish 'rainbow-mode))
+
+;;
+;; built-in packages
+;;
+(use-package paren
+  :ensure nil
+  :config
+  (show-paren-mode +1)
+  ;; show matching paren context when it's offscreen
+  (setq show-paren-context-when-offscreen 'overlay))
+
+(use-package elec-pair
+  :config
+  (electric-pair-mode +1))
+
+(use-package project
+  :ensure nil
+
+  :config
+  (gds/find-projects (expand-file-name "~/dev/src") '(".git") 3))
+
+(use-package time
+  :ensure nil
+  :defer t
+  :config
+  ;; TZs to display with `world-clock'
+  (setq world-clock-list
+        '(("America/Los_Angeles" "Seattle")
+          ("America/New_York" "New York")
+          ("America/Sao_Paulo" "Sao Paulo")
+          ("Europe/London" "London")
+          ("Europe/Paris" "Paris"))))
+
+(use-package hl-line
+  :ensure nil
+  :config
+  (global-hl-line-mode +1))
+
+(use-package savehist
+  :ensure nil
+  :init
+  (savehist-mode))
+
+(use-package recentf
+  :ensure nil
+  :config
+  (setq recentf-max-saved-items 50
+        recentf-max-menu-items 5
+        recentf-auto-cleanup 'never)
+  (recentf-mode +1))
+
+(use-package dired
+  :ensure nil
+  :defer t
+  :config
+  ;; dired - reuse current buffer by pressing 'a'
+  (put 'dired-find-alternate-file 'disabled nil)
+
+  ;; always delete and copy recursively
+  (setq dired-recursive-deletes 'always)
+  (setq dired-recursive-copies 'always)
+
+  ;; if there is a dired buffer displayed in the next window, use its
+  ;; current subdir, instead of the current subdir of this dired buffer
+  (setq dired-dwim-target t)
+
+  ;; drag files from dired to other apps
+  (setq dired-mouse-drag-files t)
+
+  ;; enable some really cool extensions like C-x C-j(dired-jump)
+  (require 'dired-x))
+
+(use-package which-key
+  :ensure nil
+  :config
+  (which-key-mode +1))
+
+(use-package ediff
+  :ensure nil
+  :defer t
+  :config
+  ;; keep the control panel in the same frame instead of a separate one
+  (setq ediff-window-setup-function #'ediff-setup-windows-plain)
+  ;; diff side by side, not stacked
+  (setq ediff-split-window-function #'split-window-horizontally))
+
+(use-package editorconfig
+  :ensure nil
+  :config
+  (editorconfig-mode +1)
+  (diminish 'editorconfig-mode))
+
+(use-package flymake
+  :ensure nil
+
+  :bind
+  (("M-n" . 'flymake-goto-next-error)
+   ("M-p" . 'flymake-goto-prev-error)))
+
 (use-package eglot
   :ensure nil
 
@@ -357,16 +495,3 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
                                (flymake-mode 1)
                                (eldoc-mode 1)))
   (prog-mode . eglot-ensure))
-
-(use-package flymake
-  :ensure nil
-
-  :bind
-  (("M-n" . 'flymake-goto-next-error)
-   ("M-p" . 'flymake-goto-prev-error)))
-; (when (or (eq system-type 'darwin) (eq system-type 'gnu/linux))
-;   (use-package exec-path-from-shell
-;     :ensure t
-;
-;     :config
-;     (exec-path-from-shell-initialize)))
