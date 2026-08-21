@@ -224,7 +224,7 @@ search keeps descending into them so nested projects are also found."
   :ensure t
 
   :custom
-  (catppuccin-flavor 'latte)
+  (catppuccin-flavor 'macchiato)
 
   :config
   (load-theme 'catppuccin :no-confirm))
