@@ -13,10 +13,10 @@
    '(ace-window acp ansible catppuccin-theme cfrs consult corfu
 		difftastic diminish eldoc-box embark
 		exec-path-from-shell ghostel git-timemachine ht hydra
-		markdown-mode orderless paredit pfuture project-x
-		puppet-ts-mode pyvenv rainbow-delimiters rainbow-mode
-		shell-maker terraform-ts-mode ultra-scroll vertico
-		web-mode yasnippet))
+		marginalia markdown-mode orderless paredit pfuture
+		project-x puppet-ts-mode pyvenv rainbow-delimiters
+		rainbow-mode shell-maker terraform-ts-mode
+		ultra-scroll vertico web-mode yasnippet))
  '(package-vc-selected-packages
    '((terraform-ts-mode :url
 			"https://codeberg.org/ccbash-oss/terraform-ts-mode")))
