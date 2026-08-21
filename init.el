@@ -50,7 +50,6 @@
 ;; indent configuration
 (setq tab-width 4
       c-basic-offset 4
-      yaml-basic-offset 4
       tab-stop-list (number-sequence 4 120 4)
       tab-always-indent 'complete)
 
@@ -141,6 +140,16 @@ search keeps descending into them so nested projects are also found."
 
 (use-package magit
   :bind (("C-x g" . magit-status)))
+
+
+(use-package marginalia
+  ;; Either bind `marginalia-cycle' globally or only in the minibuffer
+  :bind (("M-A" . marginalia-cycle)
+         :map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+  :init
+  (marginalia-mode))
 
 (use-package vertico
   :init (vertico-mode +1)
