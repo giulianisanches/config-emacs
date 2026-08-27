@@ -475,6 +475,10 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
 (use-package eglot
   :ensure nil
 
+  :custom
+  (eglot-autoshutdown t)
+  (eglot-events-buffer-config '(:size 0 :format full))
+
   :config
   (add-to-list 'eglot-server-programs
                '((python-mode python-ts-mode)
