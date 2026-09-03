@@ -112,6 +112,12 @@ search keeps descending into them so nested projects are also found."
             (project-remember-project pr)))
         (gds/find-projects entry dir-list (1- max-depth))))))
 
+(defun my/project-kill-buffers-before-switch (&rest _args)
+  "Kill all buffers of the current project before switching."
+  (when (project-current)
+    (project-kill-buffers t)))
+
+(advice-add 'project-switch-project :before #'my/project-kill-buffers-before-switch)
 ;;
 ;; external packages
 ;;
