@@ -1,3 +1,5 @@
+;;; init.el --- Emacs configuration  -*- lexical-binding: t; -*-
+
 ;; Reference: https://github.com/bbatsov/emacs.d/blob/master/early-init.el
 ;; with some small personal preferences ( i still need to understand what other configurations
 ;; i can move here)

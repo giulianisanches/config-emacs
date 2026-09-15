@@ -1,3 +1,5 @@
+;;; init.el --- Emacs configuration  -*- lexical-binding: t; -*-
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -11,12 +13,15 @@
  '(frame-background-mode 'dark)
  '(package-selected-packages
    '(ace-window acp ansible catppuccin-theme cfrs consult corfu
-		difftastic diminish eldoc-box embark
-		exec-path-from-shell ghostel git-timemachine ht hydra
-		marginalia markdown-mode orderless paredit pfuture
+		cperl-mode dictionary difftastic diminish editorconfig
+		eldoc-box elixir-ts-mode embark exec-path-from-shell
+		faceup flymake ghostel git-timemachine ht hydra
+		less-css-mode lua-mode marginalia markdown-mode
+		markdown-ts-mode orderless org paredit peg pfuture
 		project-x puppet-ts-mode pyvenv rainbow-delimiters
-		rainbow-mode shell-maker terraform-ts-mode
-		ultra-scroll vertico web-mode yasnippet))
+		rainbow-mode shell-maker terraform-ts-mode tramp
+		ultra-scroll verilog-mode vertico wallpaper web-mode
+		yasnippet))
  '(package-vc-selected-packages
    '((terraform-ts-mode :url
 			"https://codeberg.org/ccbash-oss/terraform-ts-mode")))

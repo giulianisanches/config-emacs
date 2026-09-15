@@ -1,4 +1,5 @@
-;;; init.el --- Emacs configuration
+;;; init.el --- Emacs configuration  -*- lexical-binding: t; -*-
+
 ;; Reference: https://github.com/bbatsov/emacs.d/blob/master/init.el
 
 (setq custom-file (concat user-emacs-directory "config/custom.el"))
