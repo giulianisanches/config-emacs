@@ -228,10 +228,10 @@ search keeps descending into them so nested projects are also found."
   :config
   (yas-global-mode 1))
 
-(use-package atom-one-dark-theme
+(use-package solarized-theme
   :ensure t
   :config
-  (load-theme 'atom-one-dark t))
+  (load-theme 'solarized-dark t))
 
 (use-package markdown-mode
   :defer t
