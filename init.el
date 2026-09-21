@@ -228,12 +228,10 @@ search keeps descending into them so nested projects are also found."
   :config
   (yas-global-mode 1))
 
-(use-package catppuccin-theme
-  :custom
-  (catppuccin-flavor 'macchiato)
-
+(use-package atom-one-dark-theme
+  :ensure t
   :config
-  (load-theme 'catppuccin :no-confirm))
+  (load-theme 'atom-one-dark t))
 
 (use-package markdown-mode
   :defer t
