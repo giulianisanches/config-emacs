@@ -29,3 +29,7 @@
 ;; like spell-checking dictionaries and subprocess sorting
 (when (and (eq system-type 'darwin) (not (getenv "LANG")))
   (setenv "LANG" "en_US.UTF-8"))
+
+; Put this somewhere early in .emacs.d/init.el
+(require 'comp)
+(setq native-comp-driver-options (cons "-mmacosx-version-min=11" native-comp-driver-options))
