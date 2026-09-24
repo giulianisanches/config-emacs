@@ -228,10 +228,11 @@ search keeps descending into them so nested projects are also found."
   :config
   (yas-global-mode 1))
 
-(use-package solarized-theme
-  :ensure t
+(use-package catppuccin-theme
+  :custom
+  (catppuccin-flavor 'macchiato)
   :config
-  (load-theme 'solarized-dark t))
+  (load-theme 'catppuccin :no-confirm))
 
 (use-package markdown-mode
   :defer t
