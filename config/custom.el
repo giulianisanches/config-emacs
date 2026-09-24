@@ -13,7 +13,7 @@
  '(frame-background-mode 'dark)
  '(package-selected-packages
    '(ace-window acp ansible catppuccin-theme cfrs consult corfu
-		csharp-mode dictionary difftastic diminish
+		cperl-mode csharp-mode dictionary difftastic diminish
 		editorconfig eldoc-box elixir-ts-mode embark
 		exec-path-from-shell faceup flymake ghostel
 		git-timemachine ht hydra less-css-mode lua-mode
