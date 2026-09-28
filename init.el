@@ -131,7 +131,6 @@ search keeps descending into them so nested projects are also found."
   :config
   (ultra-scroll-mode +1))
 
-(setq package-install-upgrade-built-in t)
 (use-package transient)
 
 (use-package compat)
@@ -391,6 +390,7 @@ Like normal Emacs `C-k'.  Kill to end of line and put content in kill-ring."
   (setq show-paren-context-when-offscreen 'overlay))
 
 (use-package elec-pair
+  :ensure nil
   :config
   (electric-pair-mode +1))
 
