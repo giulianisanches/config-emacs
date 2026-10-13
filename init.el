@@ -236,6 +236,8 @@ search keeps descending into them so nested projects are also found."
 (use-package markdown-mode
   :defer t
 
+  :init (setq markdown-command "multimarkdown")
+
   :custom
   (markdown-italic-underscore t)
   (markdown-asymmetric-header t))
